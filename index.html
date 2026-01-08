@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOTO_SERIES_01</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #FFFFFF;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+        }
+        
+        .slider-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            transition: transform 0.4s steps(20, end); 
+        }
+
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center the group vertically */
+            padding: 2rem;
+            box-sizing: border-box;
+            color: #000000;
+        }
+
+        .image-wrapper {
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid #000;
+            padding: 10px;
+            background: #fff;
+            /* Detach from top info-bar */
+            margin-top: 60px; 
+            margin-bottom: 2rem;
+            flex-shrink: 0;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: contrast(1.05);
+        }
+
+        .nav-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            color: #000;
+            border: 1px solid #000;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: background 0.1s;
+        }
+
+        .nav-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .info-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            letter-spacing: -0.02em;
+            background: white;
+            z-index: 50;
+        }
+
+        .slide-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            border-top: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            background: white;
+            z-index: 50;
+        }
+
+        .caption-text {
+            max-width: 800px;
+            width: 100%;
+            text-align: left;
+            border-top: 1px solid #000;
+            padding-top: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            /* Detach from bottom footer */
+            margin-bottom: 60px; 
+        }
+
+        .metadata {
+            font-size: 10px;
+            line-height: 1.4;
+            color: #666;
+        }
+
+        .description {
+            font-size: 13px;
+            line-height: 1.5;
+            text-transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-btn { display: none; }
+            .slide { 
+                justify-content: flex-start;
+                padding-top: 80px;
+                padding-bottom: 80px;
+                overflow-y: auto;
+            }
+            .image-wrapper { margin-top: 0; }
+            .caption-text { 
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="info-bar">
+        <span>COLLECTION_LOG_001</span>
+        <span>STATUS: ACTIVE_ARCHIVE</span>
+        <span id="status-clock">00:00:00</span>
+    </div>
+
+    <!-- Navigation -->
+    <button class="nav-btn prev" onclick="moveSlide(-1)">←</button>
+    <button class="nav-btn next" onclick="moveSlide(1)">→</button>
+
+    <div class="slider-container" id="slider">
+        
+        <!-- Slide 1 -->
+        <section class="slide">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Landscape">
+            </div>
+            <div class="caption-text">
+                <div class="metadata">
+                    <strong>REF_ID: 01_MIST</strong><br>
+                    COORD: 46.8523° N, 121.7603° W<br>
+                    TIME: 05:42 PST<br>
+                    FORMAT: DIGITAL_RAW
+                </div>
+                <div class="description">
+                    The morning mist acts as a natural diffusion filter, softening the geometric harshness of the mountain range. This study focuses on the transition between solid form and atmospheric vapor in the early hours of the day.
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80" alt="Forest">
+            </div>
+            <div class="caption-text">
+                <div class="metadata">
+                    <strong>REF_ID: 02_CANOPY</strong><br>
+                    COORD: 45.5230° N, 122.6765° W<br>
+                    TIME: 12:15 PST<br>
+                    FORMAT: DIGITAL_RAW
+                </div>
+                <div class="description">
+                    Analysis of verticality within the ancient timber zone. The sunlight penetration suggests a complex subterranean network. Documentation of the "emerald" color spectrum under direct overhead lighting conditions.
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" alt="Coast">
+            </div>
+            <div class="caption-text">
+                <div class="metadata">
+                    <strong>REF_ID: 03_EDGE</strong><br>
+                    COORD: 36.3326° N, 121.8555° W<br>
+                    TIME: 18:30 PST<br>
+                    FORMAT: DIGITAL_RAW
+                </div>
+                <div class="description">
+                    The coastal edge represents a permanent state of conflict between terrestrial stability and oceanic momentum. Captured at the golden hour to highlight the texture of basalt rock against the high-velocity spray.
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="slide-footer">
+        <span>FILE_POSITION</span>
+        <span>[ <span id="current-index">1</span> / 3 ]</span>
+        <span>SYSTEM_TYPE: V_0.1</span>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const slider = document.getElementById('slider');
+        const counter = document.getElementById('current-index');
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        function moveSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
+            updateSlider();
+        }
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentIndex * 100}vw)`;
+            counter.innerText = currentIndex + 1;
+        }
+
+        // Swipe Detection
+        let touchstartX = 0;
+        window.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX);
+        window.addEventListener('touchend', e => {
+            const touchendX = e.changedTouches[0].screenX;
+            if (touchendX < touchstartX - 50) moveSlide(1);
+            if (touchendX > touchstartX + 50) moveSlide(-1);
+        });
+
+        // Keyboard
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') moveSlide(1);
+            if (e.key === 'ArrowLeft') moveSlide(-1);
+        });
+
+        // Clock logic
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('status-clock').innerText = now.toTimeString().split(' ')[0];
+        }, 1000);
+    </script>
+</body>
+</html>
